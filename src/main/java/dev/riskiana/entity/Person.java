@@ -13,7 +13,7 @@ import java.util.Set;
 public class Person {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hibernate_seq")
-  @Column(nullable = false)
+  @Column(name = "person_id", nullable = false)
   private Long id;
 
   @Column(name = "first_name", nullable = false)

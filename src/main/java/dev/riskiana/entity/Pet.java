@@ -15,6 +15,7 @@ public class Pet {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hibernate_seq")
   @SequenceGenerator(name = "hibernate_seq", sequenceName = "hibernate_sequence", allocationSize = 1)
+  @Column(name = "id")
   private Long id;
 
   @Column(name = "name", nullable = false)
