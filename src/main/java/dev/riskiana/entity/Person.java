@@ -22,5 +22,18 @@ public class Person {
   @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
   private Set<Pet> pets;
 
+  public Set<Pet> getPets() {
+    return pets;
+  }
+
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
 
 }

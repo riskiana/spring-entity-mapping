@@ -25,7 +25,23 @@ public class Pet {
   @JoinColumn(
       name = "owner_id"
   )
-  private Person person;
+  private Person owner;
+
+  public void setName(String name){
+    this.name = name;
+  }
+
+  public Person getOwner() {
+    return owner;
+  }
+
+  public String getOwnerName() {
+    return owner.getFirstName();
+  }
+
+  public void setOwner(Person owner) {
+    this.owner = owner;
+  }
 
 
 }
