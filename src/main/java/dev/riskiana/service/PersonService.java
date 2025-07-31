@@ -23,7 +23,10 @@ public class PersonService {
   }
 
   public Person getPersonByName(String name) {
-    return entityManager.find(Person.class, name);
+    String jpql = "SELECT p FROM Person p WHERE p.firstName = :name";
+    return entityManager.createQuery(jpql, Person.class)
+        .setParameter("name", name)
+        .getSingleResult();
   }
 
   public List<Person> getAllPersons() {
@@ -46,6 +49,7 @@ public class PersonService {
   }
 
 
+  @Transactional
   public Person createPerson(@Valid Person person) {
     Person p = new Person();
     p.setFirstName(person.getFirstName());
