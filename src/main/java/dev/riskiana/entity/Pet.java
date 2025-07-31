@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Pet {
@@ -18,6 +19,7 @@ public class Pet {
   @Column(name = "id")
   private Long id;
 
+  @NotBlank
   @Column(name = "name", nullable = false)
   private String name;
 
@@ -41,6 +43,10 @@ public class Pet {
 
   public void setOwner(Person owner) {
     this.owner = owner;
+  }
+
+  public String getName() {
+    return name;
   }
 
 

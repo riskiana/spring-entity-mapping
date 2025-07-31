@@ -2,18 +2,20 @@ package dev.riskiana;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import dev.riskiana.entity.Person;
 import dev.riskiana.entity.Pet;
+import dev.riskiana.exception.PersonNotFoundException;
 import dev.riskiana.service.PersonService;
 import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 public class PersonServiceTests {
@@ -35,7 +37,7 @@ public class PersonServiceTests {
     Person mockPerson = new Person();
     mockPerson.setFirstName("John");
 
-    Mockito.when(entityManager.find(Mockito.eq(Person.class), Mockito.any()))
+    when(entityManager.find(Mockito.eq(Person.class), any()))
         .thenReturn(mockPerson);
 
     Pet pet = personService.addPet(personId, petName);
@@ -45,6 +47,20 @@ public class PersonServiceTests {
 
     verify(entityManager, times(1)).persist(pet);
 
+  }
+
+  @Test
+  void testAddPetPersonNotFound() {
+    Long personId = 99L;
+    when(entityManager.find(Person.class, personId)).thenReturn(null);
+
+    PersonNotFoundException ex = assertThrows(
+        PersonNotFoundException.class,
+        () -> personService.addPet(personId, "Buddy")
+    );
+
+    assertEquals("Person with id 99 not found", ex.getMessage());
+    verify(entityManager, never()).persist(any());
   }
 
 }

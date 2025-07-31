@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
@@ -17,9 +18,10 @@ public class Person {
   private Long id;
 
   @Column(name = "first_name", nullable = false)
+  @NotBlank
   private String firstName;
 
-  @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
   private Set<Pet> pets;
 
   public Set<Pet> getPets() {
